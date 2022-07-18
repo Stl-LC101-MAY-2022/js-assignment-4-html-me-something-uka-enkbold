@@ -1,33 +1,159 @@
 /* Write your CSS here! */
-* {
+*{
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  
-  body {
-    background-image: linear-gradient(
-        rgba(62, 20, 20, 0.4),
-        rgba(62, 20, 20, 0.4)
-      ),
-      url(back.jpg);
-    background-size: cover;
-    background-position: center;
-    font-family: Lato;
-    font-weight: 300;
-    position: relative;
+    padding: 0; 
+}
+body{
+    font-family: 'Baloo Da 2', cursive;
+}
+.banner-text{
+    width: 100%;
+    position: absolute;
+}
+.banner-text ul{
+    height: 20px;
+    float: right;  
+}
+.banner-text ul li {
+    display: inline-block;
+    padding: 15px 15px;
+    text-transform: uppercase;
+    color: rgb(217, 247, 162);
+    font-size: 12px;
+}
+.banner-text h2{
+    text-align: center;
+    color: red;
+    font-size: 20px;
+    margin-top: 10%;
+    padding: auto;
+}
+.banner-text h4{
+    text-align: center;
+    color: #fff;
+    margin-top: 10;
+    padding: 0.1rem;
+}
+.banner-text p{
+    color: #fff;
+    font-size: 11px;
+    text-align:center;
+    margin-top: 10;
+}
+.banner-text h3{
+    color: rgb(217, 247, 162);
+    font-size: 12px;
+    text-align:center;
+}
+.banner-text ol{
+    display: inline-block;
+    padding: 10px 10px;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 11px;
+    text-align: justify;
+}
+
+.animation-area {
+    background: linear-gradient(to left, #45886c,#6fa2f0);
+    width: 100%;
     height: 100vh;
-    color: #555;
-  }
-  
- h1{
-    color: blue;
-    position: center;
- }
-  
+}
+.box-area{
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.box-area li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 25px;
+    height: 25px;
+    background: rgba(255,255,255,0.2);
+    animation: animate 20s linear infinite;
+    bottom: -150px;
+}
+.box-area li:nth-child(1){
+    left: 86%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;   
+}
+.box-area li:nth-child(2){
+    left: 12%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 1.5s;
+    animation-duration: 10s;
+}
+.box-area li:nth-child(3){
+    left: 70%;
+    width: 100px;
+    height: 100px;
+    animation-delay: 5.5s;
+}
+.box-area li:nth-child(4){
+    left: 42%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 15s;
+}
+.box-area li:nth-child(5){
+    left: 65%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 0s;
+}
+.box-area li:nth-child(6){
+    left: 15%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3.5s;
+}
+@keyframes animate{
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100%{
+        transform: translateY(-800px)rotate(360deg);
+        opacity: 0;
+    }
+}
+footer{
+    color:#fff;
+     position: center;
+     bottom: 0;
+     width: 100%;
+     background-color:rgb(217, 247, 162);
+     text-align:center;
+     height:auto;
+     padding:10px;
+     margin:0px;
+}
+hr{
+    height:.1rem;
+    background-color:#fff;
+    border:none;
+    margin:10px 0px 10px;
+}
+#intro{
+    margin-bottom:0px;
+}
+a{
+    color:pink;
+    font-weight:600;
+    text-decoration:none;
+}
+a:hover{
+    color: powderblue !important;
+}
+a:visited{
+    color:greenyellow;
+}
+

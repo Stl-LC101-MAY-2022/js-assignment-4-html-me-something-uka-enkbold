@@ -1,2 +1,2 @@
-const scorer = require('app.js');
-scorer.runProgram();
+// const scorer = require('app.js');
+// scorer.runProgram();
