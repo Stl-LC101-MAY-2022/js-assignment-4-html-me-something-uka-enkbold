@@ -1,132 +1,102 @@
-// // inspired by https://exercism.io/tracks/javascript/exercises/etl/solutions/91f99a3cca9548cebe5975d7ebca6a85
-// const input = require("readline-sync");
-// let word = '';
-// const oldPointStructure = {
-//   1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
-//   2: ['D', 'G'],
-//   3: ['B', 'C', 'M', 'P'],
-//   4: ['F', 'H', 'V', 'W', 'Y'],
-//   5: ['K'],
-//   8: ['J', 'X'],
-//   10: ['Q', 'Z']
-// };
+// Create variable that holds players turn first player is player 0, second player is first player. 
+var activePlayer = 0;
 
-// function transform(oldPointStructure) {
-//   let newPointStructure = {};
-//   Object.keys(oldPointStructure).forEach(point => {
-//     oldPointStructure[point].forEach(character=> {
-//       newPointStructure[character.toLowerCase()] = point;
-//     });
-//   });
-//   return newPointStructure;
-// }
-// let newPointStructure = transform(oldPointStructure);
+//Create variable that sum point of each players point
+var scores = [0, 0];
 
-// function oldScrabbleScorer(word) {
-// 	word = word.toUpperCase();
-// 	let letterPoints = "";
-// 	for (let i = 0; i < word.length; i++) {
+//Create variable that saves each turn's point of each player.
+var roundScore = 0;
+
+//create variable that holds dice point and set 1-6 numbers randomly to the dice.
+var dice = Math.floor(Math.random()*6)+1;
+
+// program starts here
+
+document.getElementById("score-0").textContent = 0; 
+document.getElementById("score-1").textContent = 0; 
+document.getElementById("current-0").textContent = 0; 
+document.getElementById("current-1").textContent = 0; 
+
+//create dice dom variable for future easier access 
+
+var diceDom = document.querySelector(".dice");
+diceDom.style.display = "none";
+// How to access through dom shows below
+// document.querySelector("#score-0").textContent = 0; 
+// document.querySelector("#score-1").textContent = 0; 
+// document.querySelector("#current-0").textContent = 0; 
+// document.querySelector("#current-1").textContent = 0; 
+// document.querySelector("#score-1").innerHTML = "<em> Yes!!! </em>";
+
+// Шоог шидэх эвэнт листэнэр 
+
+document.querySelector(".btn-roll").addEventListener("click", function(){
+    // get rolldice button from DOM// add event listener function to the rolldice button 
+// when it's clicked get the dice pics from dom and show it to the browser change it interchangeable after each click.
+// 1-6 доторх санамсаргүй нэг тоо гаргаж ирнэв
+    var diceNumber = Math.floor(Math.random()*6)+1;
+// буусан санамсаргүй тоонд харгалзах шооны зургыг вэб дээр гаргаж ирнэв
+    diceDom.style.display = "block";
+// буусан тоо нь 1-ээс ялгаатай бол идэвхтэй тоглогчийн ээлжийн оноог нэмэгдүүлнэв
+    diceDom.src = 'dice-' + diceNumber + ".png";
+    // alert("Шоог шидлээ : " + diceNumber);
+    if(diceNumber !==1){
+        // 1-ээс ялгаатай тоо буулаа. Буусан тоог тоглогчид нэмж өгнө.
+        roundScore = roundScore + diceNumber;
+        document.getElementById("current-" + activePlayer).textContent = roundScore;
+    } else {
+        switchToNextPlayer();
+    }
+    
+});
+
+// HOLD товчны эвэнт листэнэр 
+
+document.querySelector('.btn-hold').addEventListener('click', function(){
+    //уг тоглогчийн цуглуулсан ээлжний оноог глобаль оноон дээр нэмж өгнө.
+    scores[activePlayer] = scores[activePlayer] + roundScore;
+
+    // Уг тоглогч хожсон эсэхийш шалгах оноо 100-с их эсэх 
+    if (scores[activePlayer]>= 10){
+        // ялагч гэсэн текстийг нэрний оронд гаргаж өгнө
+        document.getElementById("name-" + activePlayer).textContent = "Winner!!!";
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+    } else {
+        switchToNextPlayer(); 
+    }
+    // Хялбар аргаар бичвэл
+
+    // if (activePlayer ===0){
+    //     scores[0] = scores [0] + roundScore;
+    // } else { 
+    //     scores[1] = scores [1]+ roundScore;
+    // }
+
+   // Дэлгэц дээр оноог өөрчилнө.
+   document.getElementById("score-" + activePlayer).textContent = scores[activePlayer];
+  // Тоглогчийн ээлжийг солино
+switchToNextPlayer();
+})
+// Энэ функц нь тоглох ээлжийн дараачийн тоглогч руу шилжүүлдэг. 
+function switchToNextPlayer(){
+    // Ээлжийн оноог 0 болгоно.
+    roundScore = 0;
+    document.getElementById('current-' + activePlayer).textContent = 0;
+    // Тоглогчийн ээлжийг солино.
+    document.getElementById("current-" + activePlayer).textContent = roundScore;
+        //Хэрэв идэвхтэй тоглогч  0 байвал идэхвтэй тоглогчийг 1 болго 
+        //Хэрэв үгүй бол тоглогчийг 0 болго    
+        //Тоглочийн ээлжиндээ цуглуулсан оноог 0 болгоно мөн тоглогчийн ээлжийг шилжүүлнэ.
+        roundScore = 0;
+        document.getElementById("current-" + activePlayer).textContent = 0;
+        // Хялбараар бичих арга 
+        activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
  
-// 	  for (const pointValue in oldPointStructure) {
- 
-// 		 if (oldPointStructure[pointValue].includes(word[i])) {
-// 			letterPoints += `Points for '${word[i]}': ${pointValue}\n`
-// 		 }
-// 	  }
-// 	}
-// 	return letterPoints;
-//  };
+        // Улаан цэгийг шилжүүлэх код бичнэ
+     document.querySelector(".player-0-panel").classList.toggle("active");
 
-// let initialPrompt = function() {
-// 	let userWord  = input.question("Enter a word to score:\n ")
-// 	return userWord;
-// 	}
+     document.querySelector(".player-1-panel").classList.toggle("active");
 
-// let simpleScore = function (word){
-// 	if(word.includes(" ")){
-// 		word= word.length-1;
-// 	}
-//  return word.length;
-// };
-
-// let vowelBonusScore = function(word){
-//   let vowels = 'aeiou';
-//   let countbyBonusVowels = 0;
-//   for(let i = 0; i < word.length ; i++) {
-//     if (vowels.includes(word[i].toLowerCase())) {
-//       countbyBonusVowels += 3;
-//     }
-//     if (!vowels.includes(word[i].toLowerCase())){
-//       countbyBonusVowels +=1
-//     }
-//   }
-//   return countbyBonusVowels;
-// }
-
-// let scrabbleScore = function(word){
-// 	let scrabble = newPointStructure
-// 	   points = 0,
-//    word = word.toLowerCase();
-//     for (i = 0; i < word.length; i++) {
-//         points += Number(scrabble[word[i]] )
-//     }
-//     return points;
-// }
-
-// const scoringAlgorithms = [
-// 	{
-// 		"name" : "Simple Score",
-// 		"Description": "Each letter is worth 1 point",
-// 		"ScoreFunction": simpleScore
-// 	},
-// 	{
-// 		"name" : "Bonus Vowels",
-// 		"Description": "Vowels are 3 pts, consonants are 1 pt.",
-// 		"ScoreFunction": vowelBonusScore
-// 	},
-// 	{
-// 		"name" : "Scrabble",
-// 		"Description": "The traditional scoring algorithm.",
-// 		"ScoreFunction": scrabbleScore
-// 	}	
-// ];
-
-// let scorerPrompt = function () {
-//  let options = [
-// `\n\t0 - Simple: ${scoringAlgorithms[0].Description}`,
-// `\n\t1 - Bonus Vowels: ${scoringAlgorithms[1].Description}`,
-// `\n\t2 - Scrabble: ${scoringAlgorithms[2].Description} `
-// ]
-// let selectedScoringReply = input.question(`\n Which scoring options would you like to use?\n ${options}\n Please enter 0, 1, or 2:
-// `);
-// 	while (selectedScoringReply < 0 || selectedScoringReply>=3 || isNaN(selectedScoringReply)) {
-// selectedScoringReply = input.question(`\nPlease enter a valid number. Which scoring options would you like to use? ${options} \nPlease enter 0, 1, or 2:\n`);
-// 	}
-// 	return Number(selectedScoringReply); 
-// }
-
-// function runProgram(){
-// 	while (word!=='stop'){
-// 	word = initialPrompt()	
-// 	if(word === 'stop'){
-// 		console.log("thanks for playing")
-// 		return
-// 	}
-// 	let num = scorerPrompt(); 
-// console.log(`score for '${word}': is ${scoringAlgorithms[num].ScoreFunction(word)} points`)
-// }
-// }
-
-// module.exports = {
-//    initialPrompt: initialPrompt,
-//    transform: transform,
-//    oldPointStructure: oldPointStructure,
-//    simpleScore: simpleScore,
-//    vowelBonusScore: vowelBonusScore,
-//    scrabbleScore: scrabbleScore,
-//    scoringAlgorithms: scoringAlgorithms,
-//    newPointStructure: newPointStructure,
-// 	runProgram: runProgram,
-// 	scorerPrompt: scorerPrompt
-// };
-
+        // Шоог түр алг болгох
+        diceDom.style.display = "none";
+}
